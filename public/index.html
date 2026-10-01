@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academic Track</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark">A</div><div><b>Academic</b><span>TRACK</span></div></div>
+      <p class="menu-label">MENU</p>
+      <nav>
+        <button class="nav-item active" data-section="dashboard">⬡ <span>Dashboard</span></button>
+        <button class="nav-item" data-section="students">♛ <span>Students</span></button>
+        <button class="nav-item" data-section="attendance">◻ <span>Attendance</span></button>
+        <button class="nav-item" data-section="marks">◼ <span>Marks & Results</span></button>
+        <button class="nav-item" data-section="reports">◫ <span>Reports</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <button class="nav-item">⚙ <span>Settings</span></button>
+        <div class="profile">
+          <div class="avatar">AD</div>
+          <div><b>Admin User</b><small>Administrator</small></div>
+          <span>⋯</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="kicker">OVERVIEW</p>
+          <h1>Good morning, Admin <span>👋</span></h1>
+          <p class="muted">Here's what's happening with your students today.</p>
+        </div>
+        <div class="top-actions">
+          <button class="icon-button">☲</button>
+          <button class="icon-button notification">🔔<i></i></button>
+          <button class="primary" id="addStudentButton">+ Add student</button>
+        </div>
+      </header>
+
+      <div id="toast" class="toast"></div>
+
+      <section class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon purple">♛</div>
+          <div>
+            <span>Total Students</span>
+            <strong id="totalStudents">0</strong>
+            <small class="positive">↑ 12% <em>vs last month</em></small>
+          </div>
+          <div class="spark purple-line"></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">◻</div>
+          <div>
+            <span>Avg. Attendance</span>
+            <strong id="avgAttendance">0%</strong>
+            <small class="positive">↑ 4.2% <em>vs last month</em></small>
+          </div>
+          <div class="spark green-line"></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange">◼</div>
+          <div>
+            <span>Avg. Marks</span>
+            <strong id="avgMarks">0%</strong>
+            <small class="positive">↑ 6.8% <em>vs last month</em></small>
+          </div>
+          <div class="spark orange-line"></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue">★</div>
+          <div>
+            <span>Top Performer</span>
+            <strong id="topPerformer">—</strong>
+            <small class="muted">Based on marks</small>
+          </div>
+          <div class="spark blue-line"></div>
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <div class="panel students-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Student overview</h2>
+              <p class="muted">Track attendance and performance at a glance.</p>
+            </div>
+            <button class="outline" id="viewAllButton">View all students →</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>STUDENT</th>
+                  <th>CLASS</th>
+                  <th>ATTENDANCE</th>
+                  <th>AVG. MARKS</th>
+                  <th>STATUS</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="studentRows"></tbody>
+            </table>
+            <div class="empty" id="emptyState">No students yet. Click "Add student" to create your first record.</div>
+          </div>
+        </div>
+
+        <div class="panel actions-panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Quick actions</h2>
+              <p class="muted">Frequently used tools.</p>
+            </div>
+          </div>
+          <button class="action-card" data-action="attendance">
+            <span class="action-icon green">◻</span>
+            <span><b>Mark attendance</b><small>Record today's attendance</small></span>
+            <strong>→</strong>
+          </button>
+          <button class="action-card" data-action="marks">
+            <span class="action-icon orange">◼</span>
+            <span><b>Add marks</b><small>Update student results</small></span>
+            <strong>→</strong>
+          </button>
+          <button class="action-card" data-action="reports">
+            <span class="action-icon purple">◫</span>
+            <span><b>Generate report</b><small>Export academic report</small></span>
+            <strong>→</strong>
+          </button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal hidden" id="studentModal">
+    <div class="modal-card">
+      <div class="modal-title">
+        <div>
+          <p class="kicker">NEW RECORD</p>
+          <h2>Add student</h2>
+        </div>
+        <button class="close" id="closeModal">×</button>
+      </div>
+      <form id="studentForm">
+        <div class="form-grid">
+          <label>Student ID<input name="studentId" placeholder="e.g. STU-101" required /></label>
+          <label>Full name<input name="name" placeholder="e.g. Ayesha Rahman" required /></label>
+          <label>Class<input name="className" placeholder="e.g. Grade 8-A" required /></label>
+          <label>Department<input name="department" placeholder="e.g. Science" required /></label>
+          <label>Email<input type="email" name="email" placeholder="student@email.com" required /></label>
+          <label>Phone<input name="phone" placeholder="Optional" /></label>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="outline" id="cancelModal">Cancel</button>
+          <button class="primary" type="submit">Save student</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
